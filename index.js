@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import path from "path";
 import { User } from "./models/User.js";
 import admin from "./routes/admin.js"
+import session from "express-session";
 
 let app = express();
 
@@ -14,6 +15,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 dotenv.config();
+
+// Session Middleware
+app.use(session({
+    secret: "your-secret-key",  // Change this to a strong secret
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Set secure: true if using HTTPS
+}));
 
 //Connecting to mongoose
 mongoose.connect(process.env.MONGO_URL).then(()=>{
@@ -48,19 +57,47 @@ app.use("/signup",async(req,res)=>{
 app.get("/LogIn",(req,res)=>{
     res.sendFile(path.resolve("views/LogIn.html"))
 })
-app.post("/login",async (req,res)=>{
-    if(req.body.username=="Mukul"){
-        if(req.body.password=="MukuL123$$$"){
-            return res.redirect("admin.html");
-        }
+app.post("/login", async (req, res) => {
+    if (req.body.username === "Mukul" && req.body.password === "MukuL123$$$") {
+        req.session.user = { username: "Mukul", role: "admin" };  // Store session data
+        return res.sendFile(path.resolve("./views/admin.html"));
     }
-    let currUser = await User.findOne({username: req.body.username});
-    if(req.body.password == currUser.password){
-        return res.redirect(path.resolve("/main.html"));
-    }
-    res.send("Incorrect password or username");
-})
 
+    let currUser = await User.findOne({ username: req.body.username });
+    if (!currUser) {
+        return res.send("User not found");
+    }
+
+    if (req.body.password === currUser.password) {
+        req.session.user = { username: currUser.username, role: "user" };  // Store session
+        return res.redirect("/main");
+    }
+
+    res.send("Incorrect password or username");
+});
+
+// Protected Route Example (Dashboard)
+app.get("/main", (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/LogIn");
+    }
+    res.sendFile(path.resolve("views/main.html"));
+});
+
+// Admin Page Route
+app.get("/admin", (req, res) => {
+    if (!req.session.user || req.session.user.role !== "admin") {
+        return res.status(403).send("Access Denied");
+    }
+    res.sendFile(path.resolve("/admin.html"));
+});
+
+// Logout Route
+app.get("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/");
+    });
+});
 
 app.listen(dotenv.PORT || 3000,()=>{
     console.log("server started");

@@ -9,6 +9,7 @@
 <body>
     <div class="container">
         <h1>Welcome Boss</h1>
+        <button class="LogOut">Logout</button>
         <h2>Admin - Add Route</h2>
         <form id="adminForm" method="POST" action="/add-route">
             <label for="fromAddress">From Address:</label>
@@ -26,5 +27,10 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <script>
+        document.querySelector(".LogOut").addEventListener("click",(e)=>{
+            window.location.href="/logout"
+        })
+    </script>
 </body>
 </html>
