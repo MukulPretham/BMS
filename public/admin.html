@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome Boss</h1>
+        <h2>Admin - Add Route</h2>
+        <form id="adminForm" method="POST" action="/add-route">
+            <label for="fromAddress">From Address:</label>
+            <input type="text" id="fromAddress" name="fromAddress" placeholder="Enter starting point" required>
+
+            <label for="toAddress">To Address:</label>
+            <input type="text" id="toAddress" name="toAddress" placeholder="Enter destination" required>
+
+            <label for="fare">Fare (₹):</label>
+            <input type="number" id="fare" name="fare" placeholder="Enter fare amount" required>
+
+            <label for="duration">Duration (mins):</label>
+            <input type="number" id="duration" name="duration" placeholder="Enter duration" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

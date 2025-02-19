@@ -1,0 +1,12 @@
+nav{
+    display: flex;
+    height: 10vh;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    font-size: 30px;
+    margin-left: 8px;
+}
