@@ -101,6 +101,12 @@ app.get("/logout", (req, res) => {
     });
 });
 
+//booking route.
+app.get("/booking", (req, res) => {
+    console.log("Entered booking section");
+    res.sendFile(path.resolve("views", "booking.html"));
+});
+
 app.listen(dotenv.PORT || 3000,()=>{
     console.log("server started");
 })

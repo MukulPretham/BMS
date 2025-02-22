@@ -7,4 +7,9 @@ router.get("/",async(req,res)=>{
     res.json(busInfo);
 })
 
+router.get("/bookings/:_id",async(req,res)=>{
+    let details = await Bus.findOne({_id: req.params._id});
+    res.json(details);
+})
+
 export default router;

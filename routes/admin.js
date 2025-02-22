@@ -7,7 +7,9 @@ router.post("/",async(req,res)=>{
         fromAddress: req.body.fromAddress,
         toAddress: req.body.toAddress,
         fare: req.body.fare,
-        duration: req.body.duration
+        duration: req.body.duration,
+        Total_Seats: req.body.totalSeats,
+        Available_Seats: req.body.availableSeats
     })
     currBus.save();
     console.log("bus Saved");

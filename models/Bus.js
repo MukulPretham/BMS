@@ -4,7 +4,9 @@ let busSchema = new mongoose.Schema({
     fromAddress: String,
     toAddress: String,
     fare: Number,
-    duration: Number
+    duration: Number,
+    Total_Seats: Number,
+    Available_Seats: Number
 })
 
 export let Bus = mongoose.model("Buses",busSchema);
