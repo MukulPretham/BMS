@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import path from "path";
 import { User } from "./models/User.js";
 import admin from "./routes/admin.js"
+import buses from "./routes/buses.js"
 import session from "express-session";
 
 let app = express();
@@ -30,6 +31,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 })
 
 app.use("/add-route",admin);
+app.use("/buses",buses);
 
 //SignUp route
 app.get("/SignUp",(req,res)=>{
@@ -81,7 +83,6 @@ app.get("/main", (req, res) => {
     if (!req.session.user) {
         return res.redirect("/LogIn");
     }
-    res.sendFile(path.resolve("views/main.html"));
     res.redirect("/main.html");
 });
 
