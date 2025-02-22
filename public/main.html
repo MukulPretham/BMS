@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Let start our Journey</h1>
+    <button class="LogOut">LogOut</button>
     <div class="container">
         <h2>Enter Your Route</h2>
         <form id="routeForm">
@@ -21,5 +22,10 @@
         </form>
     </div>
     <script src="script.js"></script>
+    <script>
+        document.querySelector(".LogOut").addEventListener("click",()=>{
+            window.location.href="/logout"
+        })
+    </script>
 </body>
 </html>

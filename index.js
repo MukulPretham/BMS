@@ -82,6 +82,7 @@ app.get("/main", (req, res) => {
         return res.redirect("/LogIn");
     }
     res.sendFile(path.resolve("views/main.html"));
+    res.redirect("/main.html");
 });
 
 // Admin Page Route
