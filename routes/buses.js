@@ -4,7 +4,7 @@ let router = express.Router();
 
 router.get("/",async(req,res)=>{
     let DATE = new Date(req.query.date);
-    let busInfo = await Bus.find({fromAddress: req.query.from,date:{ $gte :DATE} , toAddress: req.query.to});
+    let busInfo = await Bus.find({fromAddress: req.query.from,date: DATE , toAddress: req.query.to});
     res.json(busInfo);
 })
 
