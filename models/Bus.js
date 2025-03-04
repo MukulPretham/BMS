@@ -4,6 +4,7 @@ let busSchema = new mongoose.Schema({
     fromAddress: String,
     toAddress: String,
     fare: Number,
+    time : String,
     date: Date,
     duration: Number,
     Total_Seats: Number,

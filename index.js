@@ -100,6 +100,6 @@ app.get("/booking", (req, res) => {
     res.sendFile(path.resolve("views", "booking.html"));
 });
 
-app.listen(dotenv.PORT || 3000,()=>{
+app.listen(dotenv.PORT || 3001,()=>{
     console.log("server started");
 })

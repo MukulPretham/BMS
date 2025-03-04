@@ -11,6 +11,7 @@ router.post("/", async (req, res) => {
         toAddress: req.body.toAddress,
         fare: req.body.fare,
         date: new Date(currDate),
+        time: req.body.travelTime,
         duration: req.body.duration,
         Total_Seats: req.body.totalSeats,
         Available_Seats: req.body.availableSeats
