@@ -17,13 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
-// Session Middleware
-app.use(session({
-    secret: "your-secret-key",  // Change this to a strong secret
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false } // Set secure: true if using HTTPS
-}));
+
 
 //Connecting to mongoose
 mongoose.connect(process.env.MONGO_URL).then(()=>{
@@ -61,7 +55,6 @@ app.get("/LogIn",(req,res)=>{
 })
 app.post("/login", async (req, res) => {
     if (req.body.username === "Mukul" && req.body.password === "MukuL123$$$") {
-        req.session.user = { username: "Mukul", role: "admin" };  // Store session data
         return res.sendFile(path.resolve("./views/admin.html"));
     }
 
