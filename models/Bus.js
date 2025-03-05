@@ -8,7 +8,8 @@ let busSchema = new mongoose.Schema({
     date: Date,
     duration: Number,
     Total_Seats: Number,
-    Available_Seats: Number
+    Available_Seats: Number,
+    seatLayout: [Boolean]
 })
 
 export let Bus = mongoose.model("Buses",busSchema);
