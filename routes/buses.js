@@ -28,7 +28,16 @@ router.post("/bookSeat/:_id", async (req, res) => {
             }
         }
         await Bus.updateOne({ _id: req.params._id }, { $set: { Available_Seats: availableSeats } })
-        await Bus.updateOne({ _id: req.params._id }, { $set: { seatLayout: newArr } })
+        await Bus.updateOne({ _id: req.params._id }, { $set: { seatLayout: newArr } });
+
+        //updating th booking logs of a bus.
+        let customerDetails = [];
+        customerDetails.push(req.body.username);
+        customerDetails.push(req.body.seats);
+        
+        await Bus.updateOne({_id:req.params._id},{$push:{customers: customerDetails}});pos
+        
+
         res.json(newArr);
     } catch (error) {
         res.json("failed");

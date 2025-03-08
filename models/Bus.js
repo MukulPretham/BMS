@@ -9,7 +9,8 @@ let busSchema = new mongoose.Schema({
     duration: Number,
     Total_Seats: Number,
     Available_Seats: Number,
-    seatLayout: [Boolean]
+    seatLayout: [Boolean],
+    customers : []
 })
 
 export let Bus = mongoose.model("Buses",busSchema);
