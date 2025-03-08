@@ -8,6 +8,11 @@ router.get("/", async (req, res) => {
     res.json(busInfo);
 })
 
+router.get("/:_id", async (req, res) => {
+    let busInfo = await Bus.findOne({ _id:req.params._id });
+    res.json(busInfo);
+})
+
 router.get("/bookings/:_id", async (req, res) => {
     let details = await Bus.findOne({ _id: req.params._id });
     res.json(details);
@@ -16,8 +21,15 @@ router.get("/bookings/:_id", async (req, res) => {
 router.post("/bookSeat/:_id", async (req, res) => {
     try {
         let newArr = req.body.seatLayout;
+        let availableSeats = 0;
+        for(let i = 0 ; i < 40 ;i++){
+            if(newArr[i]==true){
+                availableSeats++;
+            }
+        }
+        await Bus.updateOne({ _id: req.params._id }, { $set: { Available_Seats: availableSeats } })
         await Bus.updateOne({ _id: req.params._id }, { $set: { seatLayout: newArr } })
-        res.json("Done");
+        res.json(newArr);
     } catch (error) {
         res.json("failed");
     }
