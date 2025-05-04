@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/:_id", async (req, res) => {
-    let busInfo = await Bus.findOne({ _id:req.params._id });
+    let busInfo = await Bus.findOne({ _id: req.params._id });
     res.json(busInfo);
 })
 
@@ -22,23 +22,31 @@ router.post("/bookSeat/:_id", async (req, res) => {
     try {
         let newArr = req.body.seatLayout;
         let availableSeats = 0;
-        for(let i = 0 ; i < 40 ;i++){
-            if(newArr[i]==true){
+        for (let i = 0; i < 40; i++) {
+            if (newArr[i] == true) {
                 availableSeats++;
             }
         }
-        await Bus.updateOne({ _id: req.params._id }, { $set: { Available_Seats: availableSeats } })
-        await Bus.updateOne({ _id: req.params._id }, { $set: { seatLayout: newArr } });
+        try {
+            await Bus.updateOne({ _id: req.params._id }, { $set: { Available_Seats: availableSeats } })
+            await Bus.updateOne({ _id: req.params._id }, { $set: { seatLayout: newArr } });
 
-        //updating th booking logs of a bus.
-        let customerDetails = [];
-        customerDetails.push(req.body.username);
-        customerDetails.push(req.body.seats);
-        
-        await Bus.updateOne({_id:req.params._id},{$push:{customers: customerDetails}});pos
-        
+            //updating th booking logs of a bus.
+            const PNR = Math.floor(100000 + Math.random() * 999999)
+            let customerDetails = [];
+            customerDetails.push(req.body.username);
+            customerDetails.push(req.body.seats);
+            customerDetails.push(PNR);
 
-        res.json(newArr);
+            const bookingBus = await Bus.updateOne({ _id: req.params._id }, { $push: { customers: customerDetails } });
+            console.log(bookingBus);
+            res.status(200).json({ message: "sucesss", PNR: PNR });
+        }catch(err){
+            console.log(err);
+            res.status(500).json({message: "Internal Server Error, Pleasr try agian later"});
+            return;
+        }
+        
     } catch (error) {
         res.json("failed");
     }
